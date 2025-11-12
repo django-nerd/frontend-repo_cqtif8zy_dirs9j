@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Login({ onLogin }) {
   const [name, setName] = useState("");
@@ -31,22 +32,26 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white/80 backdrop-blur rounded-xl shadow p-6 mt-10">
-      <h2 className="text-xl font-semibold text-gray-800">Welcome to CSE Resource Hub</h2>
+    <motion.div className="max-w-md mx-auto bg-white/80 backdrop-blur rounded-xl shadow p-6 mt-10"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: .35 }}
+    >
+      <h2 className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600">Welcome to CSE Resource Hub</h2>
       <p className="text-sm text-gray-500 mb-4">Login to continue</p>
       <form onSubmit={submit} className="space-y-4">
         <div>
           <label className="block text-sm text-gray-600 mb-1">Full name</label>
-          <input value={name} onChange={(e)=>setName(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
+          <input value={name} onChange={(e)=>setName(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-200 outline-none" required />
         </div>
         <div>
           <label className="block text-sm text-gray-600 mb-1">Email</label>
-          <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
+          <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-200 outline-none" required />
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-sm text-gray-600 mb-1">Role</label>
-            <select value={role} onChange={(e)=>setRole(e.target.value)} className="w-full border rounded-md px-3 py-2">
+            <select value={role} onChange={(e)=>setRole(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-200 outline-none">
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
               <option value="admin">Admin</option>
@@ -55,17 +60,17 @@ export default function Login({ onLogin }) {
           {role === "student" && (
             <div>
               <label className="block text-sm text-gray-600 mb-1">Semester</label>
-              <select value={semester} onChange={(e)=>setSemester(e.target.value)} className="w-full border rounded-md px-3 py-2">
+              <select value={semester} onChange={(e)=>setSemester(e.target.value)} className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-200 outline-none">
                 {Array.from({length:8}).map((_,i)=> <option key={i+1} value={i+1}>{i+1}</option>)}
               </select>
             </div>
           )}
         </div>
         {error && <div className="text-sm text-red-600">{error}</div>}
-        <button disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2">
+        <button disabled={loading} className="w-full rounded-md py-2 text-white bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 hover:opacity-95 transition">
           {loading ? "Signing in..." : "Sign in"}
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 }
